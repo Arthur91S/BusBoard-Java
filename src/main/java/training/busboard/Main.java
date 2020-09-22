@@ -1,24 +1,30 @@
 package training.busboard;
+
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]) {
 
-        String URL = "https://pokeapi.co/api/v2/pokemon/1";
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What Pokemon would you like to see the details about: ");
+        String userInput = sc.next();
+
+
+        String fetchPokemonDataURL = ("https://pokeapi.co/api/v2/pokemon/" + userInput);
 
         Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
-        Object name = client.target(URL)
-                .request(MediaType.APPLICATION_JSON)
-                .get(Object.class);
+        Pokemon pokemon = client.target(fetchPokemonDataURL)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Pokemon.class);
 
-        int test = 1;
-
-
-        System.out.println(name);
+        Evolution evolution = client.target(("https://pokeapi.co/api/v2/evolution-chain/" + pokemon.id))
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Evolution.class);
+        System.out.println(evolution.toString());
     }
 }	
