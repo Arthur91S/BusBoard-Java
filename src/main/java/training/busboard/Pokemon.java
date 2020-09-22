@@ -4,21 +4,44 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Pokemon {
     public String name;
-    public ArrayList<LinkedHashMap> abilities;
+    public List<LinkedHashMap> abilities;
     public int height;
     public int id;
     public LinkedHashMap sprites;
     public int weight;
 
-    public void getPokemonDetails(){
-        System.out.println("Name: " + name + "\nheight: " + height + "\nAbilities: ");
+    public List<String> getAbilities(){
+        List<String> abilitiesList = new ArrayList<>();
         for (int i = 0; i < abilities.size(); i++){
             LinkedHashMap obj = (LinkedHashMap) abilities.get(i).get("ability");
-            System.out.println(obj.get("name"));
+            abilitiesList.add(obj.get("name").toString());
         }
+        return abilitiesList;
     }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public LinkedHashMap getSprites() {
+        return sprites;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
 }

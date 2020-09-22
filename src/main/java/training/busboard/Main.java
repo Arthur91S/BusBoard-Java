@@ -22,9 +22,11 @@ public class Main {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Pokemon.class);
 
-        Evolution evolution = client.target(("https://pokeapi.co/api/v2/evolution-chain/" + pokemon.id))
+        pokemon.getPokemonDetails();
+
+        /*Evolution evolution = client.target(("https://pokeapi.co/api/v2/evolution-chain/" + pokemon.id))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Evolution.class);
-        System.out.println(evolution.toString());
+        System.out.println(evolution.toString());*/
     }
 }	
