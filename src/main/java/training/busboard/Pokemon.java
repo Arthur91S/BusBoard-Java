@@ -8,12 +8,12 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Pokemon {
-    public String name;
-    public List<LinkedHashMap> abilities;
-    public int height;
-    public int id;
-    public LinkedHashMap sprites;
-    public int weight;
+    private String name;
+    private List<LinkedHashMap> abilities;
+    private int height;
+    private  int id;
+    private LinkedHashMap sprites;
+    private int weight;
 
     public List<String> getAbilities(){
         List<String> abilitiesList = new ArrayList<>();
