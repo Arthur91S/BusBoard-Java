@@ -80,7 +80,7 @@ public class Main {
                 mainLoopContinue = false;
             }
 
-        }while (!mainLoopContinue);
+        }while (mainLoopContinue);
 
     }
 
