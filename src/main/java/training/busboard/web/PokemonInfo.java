@@ -14,53 +14,69 @@ import java.util.List;
 public class PokemonInfo {
     private final String name;
     Pokemon pokemon;
+    Evolution evolution;
+    Evolution evolutionLink;
+    Client client;
 
     public PokemonInfo(String name) {
         this.name = name;
+        String fetchPokemonDataURL = ("https://pokeapi.co/api/v2/pokemon/" + name);
+
+        Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+        this.pokemon = client.target(fetchPokemonDataURL)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Pokemon.class);
+
+        this.evolutionLink = client.target("https://pokeapi.co/api/v2/pokemon-species/" + pokemon.getName())
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Evolution.class);
+
+        this.evolution = client.target(evolutionLink.getEvolution_chain())
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Evolution.class);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<String> getDetails(){
+    public List<String> getDetails() {
         List<String> allDetails = new ArrayList<String>();
-        try {
-            String fetchPokemonDataURL = ("https://pokeapi.co/api/v2/pokemon/" + name);
 
-            Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
-            Pokemon pokemon = client.target(fetchPokemonDataURL)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(Pokemon.class);
+        List<String> pokemonDetails = getPokemonDetails(pokemon);
+        for (int i = 0; i < pokemonDetails.size(); i++) {
+            allDetails.add(pokemonDetails.get(i));
+        }
 
-            Evolution evolutionLink = client.target("https://pokeapi.co/api/v2/pokemon-species/" + pokemon.getName())
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(Evolution.class);
+        return allDetails;
 
-            Evolution evolution = client.target(evolutionLink.getEvolution_chain())
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .get(Evolution.class);
+    }
 
-            List<String> pokemonDetails = getPokemonDetails(pokemon);
-            for (int i = 0; i < pokemonDetails.size(); i++) {
-                allDetails.add(pokemonDetails.get(i));
-            }
-
+    public List<String> getEvolutions(){
+        List<String> allEvolutions = new ArrayList<String>();
             List<String> pokemonEvolutions = getEvolutions(evolution);
             for (int i = 0; i < pokemonEvolutions.size(); i++) {
-                allDetails.add(pokemonEvolutions.get(i));
+                allEvolutions.add(pokemonEvolutions.get(i));
             }
+            return allEvolutions;
+    }
 
-            List<String> pokemonAbilities = getAbilities(pokemon);
-            for (int i = 0; i < pokemonAbilities.size(); i++) {
-                allDetails.add(pokemonAbilities.get(i));
-            }
+    public List<String> getAbilities(){
+        List<String> allAbilities = new ArrayList<String>();
 
-            return allDetails;
-        } catch (Exception e){
-            List<String> error = new ArrayList<String>();
-            return error;
+        List<String> pokemonAbilities = getAbilities(pokemon);
+        for (int i = 0; i < pokemonAbilities.size(); i++) {
+            allAbilities.add(pokemonAbilities.get(i));
         }
+        return allAbilities;
+
+    }
+
+    public void getPokemonImage(){
+
+    }
+    public void getEvolutionImages(){
+
     }
 
     public List<String> getPokemonDetails(Pokemon pokemon){

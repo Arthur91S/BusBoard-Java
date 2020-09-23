@@ -15,6 +15,15 @@
                 <p><div th:each="detail: ${busInfo.getDetails()}">
                     <div th:text="${detail}" /></div>
                 </div></p>
+
+                <p><div th:each="abilities: ${busInfo.getAbilities()}">
+                    <div th:text="${abilities}" /></div>
+                </div></p>
+
+                <p><div th:each="evolutions: ${busInfo.getEvolutions()}">
+                    <div th:text="${evolutions}" /></div>
+                </div></p>
+
         </div>
     </body>
 </html>
