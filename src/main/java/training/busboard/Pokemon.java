@@ -15,6 +15,7 @@ public class Pokemon {
     private LinkedHashMap sprites;
     private int weight;
 
+
     public List<String> getAbilities(){
         List<String> abilitiesList = new ArrayList<>();
         for (int i = 0; i < abilities.size(); i++){

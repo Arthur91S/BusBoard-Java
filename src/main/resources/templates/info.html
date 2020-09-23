@@ -11,6 +11,7 @@
     <body>
         <div layout:fragment="content" class="container body-content">
             <h2>Pokemon Information</h2>
+            <img th:src="${busInfo.getPokemonImage()}">
             <div>
                 <p><div th:each="detail: ${busInfo.getDetails()}">
                     <div th:text="${detail}" /></div>
