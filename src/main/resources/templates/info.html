@@ -12,13 +12,9 @@
         <div layout:fragment="content" class="container body-content">
             <h2>Pokemon Information</h2>
             <div>
-                <p><span th:text="${busInfo.getDetails()}"></span></p>
                 <p><div th:each="detail: ${busInfo.getDetails()}">
                     <div th:text="${detail}" /></div>
                 </div></p>
-
-
-            </div>
         </div>
     </body>
 </html>

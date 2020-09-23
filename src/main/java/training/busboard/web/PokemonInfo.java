@@ -24,7 +24,7 @@ public class PokemonInfo {
     }
 
     public List<String> getDetails(){
-
+        List<String> allDetails = new ArrayList<String>();
         try {
             String fetchPokemonDataURL = ("https://pokeapi.co/api/v2/pokemon/" + name);
 
@@ -41,7 +41,22 @@ public class PokemonInfo {
                     .request(MediaType.APPLICATION_JSON_TYPE)
                     .get(Evolution.class);
 
-            return getPokemonDetails(pokemon);
+            List<String> pokemonDetails = getPokemonDetails(pokemon);
+            for (int i = 0; i < pokemonDetails.size(); i++) {
+                allDetails.add(pokemonDetails.get(i));
+            }
+
+            List<String> pokemonEvolutions = getEvolutions(evolution);
+            for (int i = 0; i < pokemonEvolutions.size(); i++) {
+                allDetails.add(pokemonEvolutions.get(i));
+            }
+
+            List<String> pokemonAbilities = getAbilities(pokemon);
+            for (int i = 0; i < pokemonAbilities.size(); i++) {
+                allDetails.add(pokemonAbilities.get(i));
+            }
+
+            return allDetails;
         } catch (Exception e){
             List<String> error = new ArrayList<String>();
             return error;
@@ -60,26 +75,30 @@ public class PokemonInfo {
        return details;
     }
 
-    public static void getEvolutions(Evolution evolution){
+    public static List<String> getEvolutions(Evolution evolution){
+        List<String> evolutions = new ArrayList<String>();
         List<List<String>> evolutionList = evolution.getEvolutions();
         for(int i = 0; i < evolutionList.size(); i++){
             for (int j = 0; j < evolutionList.get(i).size(); j++){
                 if(i == 0){
-                    System.out.println("First evolution: "+ evolutionList.get(i).get(j));
+                    evolutions.add("First evolution: "+ evolutionList.get(i).get(j));
                 }
                 if(i == 1){
-                    System.out.println("Second evolution: "+ evolutionList.get(i).get(j));
+                    evolutions.add("Second evolution: "+ evolutionList.get(i).get(j));
                 }
             }
         }
+        return evolutions;
     }
 
-    public static void getAbilities(Pokemon pokemon){
+    public static List<String> getAbilities(Pokemon pokemon){
+        List<String> abilities = new ArrayList<String>();
         List<String> abilitiesList = pokemon.getAbilities();
-        System.out.println("Abilities: ");
+        abilities.add("Abilities: ");
         for(int i = 0; i < abilitiesList.size(); i++){
-            System.out.println("- " + abilitiesList.get(i));
+            abilities.add("- " + abilitiesList.get(i));
         }
+        return abilities;
     }
 
 
